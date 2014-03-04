@@ -5,7 +5,7 @@ Lecturer:
 	Brian Gillespie 
 
 Students:
-	Alex Quigley - x10205691
+	Alex Quigley - x10205691,
 	Eoin McCrann - x10201271
 
 Project Name:
@@ -24,6 +24,7 @@ Project Requirements Summary:
 	'System should consist of a client that can access various systems that allow communication to take place between other clients. E.G. chatroom, etc.' 
 
 Project Marking Scheme:
+	
 	1. After choosing a topic area, Create an IDL file that represents the three systems i.e. the communication system that you have chosen, address book and chatroom. Hint: At the start of the project concentrate on creating a client-server communication system. At a later stage merge the communication system that you have created with the formative assessments on the address book and chatroom.
 (20 marks)
 
