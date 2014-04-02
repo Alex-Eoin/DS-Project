@@ -4,15 +4,16 @@ class ChatServant implements ChatRoomOperations
 {
 	Member[] members ;
 	String[] names ;
-	String[] currentGame ; 
+	String[] currentGame = {"empty", "empty", "data", "data"}; 
+	GameBoard game;
+	String homeTeam = "Empty";
+	String awayTeam = "Empty";
 	
 	int numberMembers ;
 
 	ChatServant() {
 		members = new Member[10];
 		names = new String[10];
-		currentGame = { "empty", "empty", "data", };
-		
 		numberMembers = 0 ;
 	}
 
@@ -30,6 +31,15 @@ class ChatServant implements ChatRoomOperations
 	}
 
 	public void registerGame(Member m, String name) {
+		if (homeTeam.equals("Empty")){
+			homeTeam = name;
+		} else if (awayTeam.equals("Empty")){
+			awayTeam = name;
+		}
+		if(!(homeTeam.equals("Empty") && homeTeam.equals("Empty"))){
+			//create game
+			//callback game created
+		}
 		members[numberMembers] = m ;
 		names[numberMembers] = name ;
 		
@@ -43,7 +53,7 @@ class ChatServant implements ChatRoomOperations
 	}
 	
 	public void exitGame(){
-		currentGame
+		
 	}
 	
 	public void chat(String c, String name) {

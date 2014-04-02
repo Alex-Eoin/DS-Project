@@ -1,12 +1,23 @@
-public class gameBoard {
+import Chat.*;
+
+public class GameBoard {
 	
-	Member homeTeam, awayTeam;
-	int homeLife, awayLife, homeScore, awayScore;
-	String gameWord, currentState, result;
+	int  playerLife;
+	String gameWord, currentState, result, homeTeam, awayTeam;
 	
+	public GameBoard(String homeTeam, String awayTeam){
+		this.homeTeam = homeTeam;
+		this.awayTeam = awayTeam;
+		playerLife = 5;
+	}
 	
 	public String createWord(String gameWord){
 		this.gameWord = gameWord;
+		char[] cString = new char[gameWord.length];
+		for(int i; i <gameWord.length;i++){
+			cString[i] = "_";
+		}
+		currentState = new String(cString);
 	}
 	
 	public String haveGuess(char guess){
@@ -14,7 +25,10 @@ public class gameBoard {
 			awayLife--;
 			if(awayLife > 0) return currentState;
 			else return awayLostGame();
-		}
+		}	
+	}
+	
+	public String haveGuess(String guess){
 		
 	}
 	
@@ -38,11 +52,7 @@ public class gameBoard {
 		}
 		currentState = new String(current);
 	}
-	
-	
-	public String haveGuess(String guess){
-		
-	}
+
 		
 	public String awayLostGame(){
 		homeScore++;
@@ -50,6 +60,7 @@ public class gameBoard {
 		"\nCurrent score is " + homeTeam.toString() + " " + String.valueOf(homeScore) + 
 		":" + 
 		String.valueOf(awayScore) + " " + awayTeam.toString();
+		
 	}
 	
 	public String homeLostGame(){
