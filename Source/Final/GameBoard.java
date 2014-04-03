@@ -39,7 +39,6 @@ public class GameBoard {
 			searchString = searchString.substring(searchString.indexOf(c));
 		}
 		return count;
-		//alt: int count = StringUtils.countMatches("a.b.c.d", ".");
 	}
 	
 	private void replaceUnderscore(char c){
@@ -54,10 +53,6 @@ public class GameBoard {
 	
 	public String awayLostGame(){
 		result = awayTeam.toString() + " has lost all their lives. Correct answer was " + gameWord;
-		//+ 
-		//"\nCurrent score is " + homeTeam.toString() + " " + String.valueOf(homeScore) + 
-		//":" + 
-		//String.valueOf(awayScore) + " " + awayTeam.toString();
 		return result;
 	}
 	

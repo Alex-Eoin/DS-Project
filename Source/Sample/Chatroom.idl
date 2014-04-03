@@ -1,0 +1,14 @@
+// Chat.idl
+module Chat
+{
+    interface Member
+    {
+        oneway void callBack(in string message);
+    };
+    
+    interface ChatRoom
+    {
+	oneway void registerCB(in Member m, in string name);
+	oneway void chat(in string c, in string name) ;
+    };
+};
