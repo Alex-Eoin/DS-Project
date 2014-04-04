@@ -10,7 +10,7 @@ class ChatServant implements ChatRoomOperations
 	GameBoard game;
 	String homeTeam = "Empty";
 	String awayTeam = "Empty";
-	
+
 	int numberMembers, numberPlayers;
 
 	ChatServant() {
@@ -33,7 +33,10 @@ class ChatServant implements ChatRoomOperations
 	}
 
 	public String registerGame(Player p, String name) {
+		if (!searchForName(name)) return "Not Found";
+		
 		players[numberPlayers] = p ;
+		
 		numberPlayers++ ;
 		p.callBack("Thank you " + name + ", you are now registered for the game");
 		System.out.println(name + " has just joined the game room.");
@@ -45,25 +48,36 @@ class ChatServant implements ChatRoomOperations
 			playerType = 1;
 		}
 		
-		if(playerType == 1){
-			createGame();
-			chat("Game message", "Game created", "System");
-		}
-
 		for (int i=0; i< numberPlayers; i++) {
+			members[i].callBack(name + "has entered a game") ;
 			players[i].callBack("New Player: " + name) ;
 		}
-		return "complete":
+		
+		if(playerType == 1){
+			createGame();
+			for (int i=0; i< numberPlayers; i++) {
+				players[i].callBack("Game created " + homeTeam + " vs " + awayTeam) ;
+			}
+			return "Away";
+		} else {
+			return "Home";
+		}
+	}
+	private boolean searchForName(String name){
+		for (int i=0; i< numberMembers; i++) {
+			if(names[i].equals(name)) return true; //name found
+		}
+		return false;
 	}
 	
 	public void exitGame(){
-		
+
 	}
-	
+
 	private void createGame(){
 		game = new GameBoard(homeTeam, awayTeam);
 	}
-	
+
 	public void chat(String type, String c, String name) {
 		System.out.println(name + " said: " + c);
 		String s = "Message from " + name + ": " + c  ;
@@ -73,10 +87,10 @@ class ChatServant implements ChatRoomOperations
 			}
 		} else {
 			for (int i=0; i<numberPlayers; i++)	{
-				players[i].callBack(type) ;
+				players[i].callBack(type + ": " + c) ;
 			}
-		} 
+		}
 	}
-	
-	
+
+
 }
