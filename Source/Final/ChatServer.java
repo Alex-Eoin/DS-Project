@@ -28,7 +28,7 @@ public class ChatServer {
 				orb.connect(c);
 
 			System.out.println("Creating Object reference from the NameService..");
-				nameObj = orb.resolve_initial_references("NameService...");
+				nameObj = orb.resolve_initial_references("NameService");
 				rootCtx = NamingContextHelper.narrow(nameObj);
 				
 			System.out.println("Assigning Name Component and binding to Root...");

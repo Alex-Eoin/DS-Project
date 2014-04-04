@@ -34,7 +34,7 @@ public class ChatClient {
 			do {
 				System.out.println("Enter Message:") ;
 				msg = b.readLine() ;
-				room.chat(msg, CustomerName) ;
+				room.chat("Chat", msg, CustomerName) ;
 				if (msg == "exit")
 					System.out.println("msg="+msg) ;
 			} while (msg != "exit");
@@ -52,4 +52,3 @@ class MemberImpl implements MemberOperations {
 		System.out.println(message) ;
 	}
 }
-

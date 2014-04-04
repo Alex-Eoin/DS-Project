@@ -3,10 +3,10 @@ import Chat.*;
 class ChatServant implements ChatRoomOperations
 {
 	Member[] members ;
-	Member[] players ;
-	
+	Player[] players ;
+
 	int playerType;
-	String[] names ;
+	String[] names;
 	GameBoard game;
 	String homeTeam = "Empty";
 	String awayTeam = "Empty";
@@ -15,9 +15,10 @@ class ChatServant implements ChatRoomOperations
 
 	ChatServant() {
 		members = new Member[10];
-		players = new Member[2];
+		players = new Player[2];
 		names = new String[10];
-		numberMembers = 0 ;
+		numberMembers = 0;
+		numberPlayers = 0;
 	}
 
 	public void registerCB(Member m, String name) {
@@ -31,9 +32,11 @@ class ChatServant implements ChatRoomOperations
 		System.out.println(name + " has just joined the chat room.");
 	}
 
-	public int registerGame(Member m, String name) {
-		players[numberPlayers] = m ;
-		
+	public String registerGame(Player p, String name) {
+		players[numberPlayers] = p ;
+		numberPlayers++ ;
+		p.callBack("Thank you " + name + ", you are now registered for the game");
+		System.out.println(name + " has just joined the game room.");
 		if (homeTeam.equals("Empty")){
 			homeTeam = name;
 			playerType = 0;
@@ -41,41 +44,38 @@ class ChatServant implements ChatRoomOperations
 			awayTeam = name;
 			playerType = 1;
 		}
-		numberMembers++ ;
-		if(playerType == 1){
-			//create game
-			//callback game created
-		}
-		members[numberMembers] = m ;
-		names[numberMembers] = name ;
-	
-		for (int i=0; i<numberMembers; i++) {
-			members[i].callBack("New Member: " + name) ;
-		}
 		
-		numberMembers++ ;
-		m.callBack("Thank you " + name + ", you are now registered");
-		System.out.println(name + " has just joined the game room.");
+		if(playerType == 1){
+			createGame();
+			chat("Game message", "Game created", "System");
+		}
+
+		for (int i=0; i< numberPlayers; i++) {
+			players[i].callBack("New Player: " + name) ;
+		}
+		return "complete":
 	}
 	
 	public void exitGame(){
 		
 	}
 	
-	private createGame(){
+	private void createGame(){
 		game = new GameBoard(homeTeam, awayTeam);
 	}
 	
-	private broadcast(){
-	
-	}
-	
-	public void chat(String c, String name) {
+	public void chat(String type, String c, String name) {
 		System.out.println(name + " said: " + c);
 		String s = "Message from " + name + ": " + c  ;
-		for (int i=0; i<numberMembers; i++)	{
-			members[i].callBack(s) ;
-		}
+		if (type.equals("Chat")){
+			for (int i=0; i<numberMembers; i++)	{
+				members[i].callBack(s) ;
+			}
+		} else {
+			for (int i=0; i<numberPlayers; i++)	{
+				players[i].callBack(type) ;
+			}
+		} 
 	}
 	
 	

@@ -3,10 +3,14 @@ module Chat {
     interface Member {
         oneway void callBack(in string message);
     };
+	
+	interface Player {
+        oneway void callBack(in string message);
+    };
     
     interface ChatRoom {
 		oneway void registerCB(in Member m, in string name);
-		string registerGame(in Member m, in string name);
-		oneway void chat(in string c, in string name) ;
+		string registerGame(in Player p, in string name);
+		oneway void chat(in string type, in string c, in string name) ;
     };
 };
