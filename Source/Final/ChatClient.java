@@ -32,6 +32,7 @@ public class ChatClient {
 			BufferedReader b = new BufferedReader(new InputStreamReader(System.in)) ;
 
 			do {
+				hang(1);
 				System.out.println("Enter Message:") ;
 				msg = b.readLine() ;
 				room.chat("Chat", msg, CustomerName) ;
@@ -44,6 +45,14 @@ public class ChatClient {
 	    		e.printStackTrace(System.out);
 		}
     }
+	
+	private static void hang(int seconds){
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+	}
 }
 
 

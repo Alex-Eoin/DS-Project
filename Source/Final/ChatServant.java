@@ -50,7 +50,7 @@ class ChatServant implements ChatRoomOperations
 		}
 		
 		for (int i=0; i< numberPlayers; i++) {
-			members[i].callBack(name + "has entered a game") ;
+			members[i].callBack(name + " has entered a game") ;
 			players[i].callBack("New Player: " + name) ;
 		}
 		
@@ -76,8 +76,8 @@ class ChatServant implements ChatRoomOperations
 	}
 
 	private void createGame(){
-		game = new GameBoard(homeTeam, awayTeam);
-		String s = game.createWord(word);
+		game = new GameBoard(homeTeam, awayTeam, word);
+		String s = game.getMask();
 		for (int i=0; i<numberPlayers; i++)	{
 			players[i].callBack("Game word: [" + s + "]") ;
 		}
@@ -87,12 +87,13 @@ class ChatServant implements ChatRoomOperations
 		this.word = word;
 	}
 	
-	public void awayPlay(String word){
+	public String awayPlay(String word){
 		String s = game.haveGuess(word);
-		System.out.println("in away play ... ~" + s);
+		System.out.println(s);
 		for (int i=0; i<numberPlayers; i++)	{
 			players[i].callBack("Game Message: " + s) ;
 		}
+		return s;
 	}
 	
 	

@@ -8,7 +8,7 @@ import org.omg.CosNaming.NamingContextPackage.*;
 
 public class GameClient {
     public static void main(String[] args) {
-		String playerType, word, guess;
+		String playerType, word, guess, result;
 		String msg = "";
 		ORB orb;
 		org.omg.CORBA.Object nameObj, obj;
@@ -59,13 +59,13 @@ public class GameClient {
 				do {
 					guess = reader.readLine() ;
 					//gameRoom.chat("Game Message", CustomerName + " guessed [" + guess+ "]", "");
-					gameRoom.awayPlay(guess);
-					try {
-						Thread.sleep(1000);
-					} catch(InterruptedException ex) {
-						Thread.currentThread().interrupt();
+					result = gameRoom.awayPlay(guess);
+					hang(1);
+					if (!result.substring(0,10).equals("GAME OVER!")) { 
+						p.callBack("Guess again:");
+					} else {
+						hang(5);
 					}
-					p.callBack("Guess again:");
 				} while (msg != "exit");	
 			}
 
@@ -74,7 +74,13 @@ public class GameClient {
 	    		e.printStackTrace(System.out);
 		}
     }
-	
+	private static void hang(int seconds){
+		try {
+			Thread.sleep(seconds * 1000);
+		} catch(InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+	}
 	
 }
 

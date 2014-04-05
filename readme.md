@@ -9,14 +9,23 @@ Students:
 	Eoin McCrann - x10201271
 
 Project Name:
-	Battlebots
+	Hangman
 
 Project Repository:
 	https://github.com/Alex-Eoin/DS-Project
 
 Project Description:
-	Java/Corba client server based game, derived from the popular game 'Battleships'. 
-	Battlebots, is a turn based strategy game requiring 2 players. Clients interact through a central Server.	
+	Java/Corba client server based game, derived from the popular game 'Hangman'. 
+	Hangman, is a turn based strategy game requiring 2 players. Clients interact through a central Server. 
+	The first player chooses a word, the second player guesses characters from the word.	
+	The second player starts with 5 lives, and loses a life for an incorrect guess. 
+	When all the second players lives are gone, the player loses. 
+	If word is completely guessed before the lives run out, the first player loses.
+	
+Project Notes:
+	As Corba is a horrible, horrible... Well if you are reading this you know what it is. We chose to have a single servant that would handle both the game and chat. 
+	A gameboard object was created to manage and handle player moves and actions.
+	The reason being this would ensure less hoops to jump through in order to get a corba game/chat system working.
 
 Project Requirements Summary:
 	'Develop a dynamic client server based communication system that is based on Java/Corba.' 
