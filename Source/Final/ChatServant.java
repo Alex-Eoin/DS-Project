@@ -10,6 +10,7 @@ class ChatServant implements ChatRoomOperations
 	GameBoard game;
 	String homeTeam = "Empty";
 	String awayTeam = "Empty";
+	String word;
 
 	int numberMembers, numberPlayers;
 
@@ -76,7 +77,25 @@ class ChatServant implements ChatRoomOperations
 
 	private void createGame(){
 		game = new GameBoard(homeTeam, awayTeam);
+		String s = game.createWord(word);
+		for (int i=0; i<numberPlayers; i++)	{
+			players[i].callBack("Game word: [" + s + "]") ;
+		}
 	}
+	
+	public void homePlay(String word){
+		this.word = word;
+	}
+	
+	public void awayPlay(String word){
+		String s = game.haveGuess(word);
+		System.out.println("in away play ... ~" + s);
+		for (int i=0; i<numberPlayers; i++)	{
+			players[i].callBack("Game Message: " + s) ;
+		}
+	}
+	
+	
 
 	public void chat(String type, String c, String name) {
 		System.out.println(name + " said: " + c);

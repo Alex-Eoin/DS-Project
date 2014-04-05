@@ -8,7 +8,7 @@ public class GameBoard {
 	public GameBoard(String homeTeam, String awayTeam){
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
-		playerLife = 5;
+		awayLife = 5;
 	}
 	
 	public String createWord(String gameWord){
@@ -24,13 +24,17 @@ public class GameBoard {
 	public String haveGuess(char guess){
 		if(gameWord.indexOf(guess) == -1) { //not found
 			awayLife--;
-			if(awayLife > 0) return currentState;
+			if(awayLife > 0) return "["+ currentState + "] Incorrect guess. Life lost, " + awayLife + " remaining!";
 			else return awayLostGame();
 		} else {
 			replaceUnderscore(guess);
-			if(currentState.indexOf('_') == -1) homeLostGame();
+			if(currentState.indexOf('_') == -1) return homeLostGame();
 		}
-		return currentState;
+		return "["+ currentState + "] Correct guess. " + awayLife + " lives remaining!";
+	}
+	
+	public String haveGuess(String guess){
+		return haveGuess(guess.charAt(0));
 	}
 	
 	private int searchStringforChar(char c){

@@ -8,7 +8,7 @@ import org.omg.CosNaming.NamingContextPackage.*;
 
 public class GameClient {
     public static void main(String[] args) {
-		String playerType;
+		String playerType, word, guess;
 		String msg = "";
 		ORB orb;
 		org.omg.CORBA.Object nameObj, obj;
@@ -35,35 +35,47 @@ public class GameClient {
 			playerType = gameRoom.registerGame(p, CustomerName);
 			
 			reader = new BufferedReader(new InputStreamReader(System.in));
-			
-			if (playerType.equals("Home"))	{
-				System.out.println("Home team-");
-				System.out.println("Please enter a word for the game:");
-				msg = reader.readLine();
+			if (playerType.equals("Not Found"))	{
+				p.callBack("Only players registered in chat can register in the gameroom and play hangman");
+				try {
+					Thread.sleep(3000);
+				} catch(InterruptedException ex) {
+					Thread.currentThread().interrupt();
+				}
+			} else if (playerType.equals("Home"))	{
+				p.callBack("The game is hangman. As the first player, please choose a word.");
+				word = reader.readLine();
+				p.callBack("The word chosen is "+ word);
+				gameRoom.homePlay(word);
 				gameRoom.chat("Game Message", CustomerName+ " has entered a word, waiting on another player", "System");
 				do {
 					msg = reader.readLine() ;
-					gameRoom.chat("Game Message", msg, CustomerName);
+					gameRoom.chat("Game Message from " + CustomerName, msg, "");
 				} while (msg != "exit");					
 			} else {
-				System.out.println("Away team-");
+				p.callBack("The game is hangman. As the second player, please guess a letter from the word.");
+				p.callBack("You have 5 lives");
+				p.callBack("Guess a letter contained in the word:");
 				do {
-					System.out.println("Guess a letter contained in the word:");
-					System.out.println("Enter Message:") ;
-					msg = reader.readLine() ;
-					gameRoom.chat("Game Message", msg, CustomerName);
-					if (msg == "exit") System.out.println("msg="+msg) ;
+					guess = reader.readLine() ;
+					//gameRoom.chat("Game Message", CustomerName + " guessed [" + guess+ "]", "");
+					gameRoom.awayPlay(guess);
+					try {
+						Thread.sleep(1000);
+					} catch(InterruptedException ex) {
+						Thread.currentThread().interrupt();
+					}
+					p.callBack("Guess again:");
 				} while (msg != "exit");	
 			}
-			
-
-			
 
 		} catch (Exception e) {
 	 	   	System.out.println("ERROR : " + e) ;
 	    		e.printStackTrace(System.out);
 		}
     }
+	
+	
 }
 
 class PlayerImpl implements PlayerOperations {

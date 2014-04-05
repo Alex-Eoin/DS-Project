@@ -11,6 +11,8 @@ module Chat {
     interface ChatRoom {
 		oneway void registerCB(in Member m, in string name);
 		string registerGame(in Player p, in string name);
+		oneway void homePlay(in string word);
+		oneway void awayPlay(in string word);
 		oneway void chat(in string type, in string c, in string name) ;
     };
 };
