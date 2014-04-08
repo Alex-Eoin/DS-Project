@@ -8,33 +8,44 @@ import org.omg.CosNaming.NamingContextPackage.*;
 
 public class ChatClient {
     public static void main(String[] args) {
-		String msg = "";
+		String msg, CustomerName;
+		ORB orb;
+		org.omg.CORBA.Object nameObj, obj;
+		NamingContext rootCtx;
+		NameComponent[] name = new NameComponent[1];
+		ChatRoom room;
+		Member m;
+		BufferedReader reader;
+
+		System.out.println("Welcome to Hangman Chat ");
+		System.out.println("- Written and Created by x10205691 and x10201271 ");		
+		
 		try {
-    		ORB orb = ORB.init(args, null);
-
-	    	//Get the Object reference from the NameService
-			org.omg.CORBA.Object nameObj=orb.resolve_initial_references("NameService");
-			NamingContext rootCtx=NamingContextHelper.narrow(nameObj);
-			NameComponent[] name = new NameComponent[1];
+    		// Orb
+			orb = ORB.init(args, null);
+			// Naming Object
+			nameObj = orb.resolve_initial_references("NameService");
+			// Root Context
+			rootCtx=NamingContextHelper.narrow(nameObj);	
+			// Chatroom Name Component
 			name[0] = new NameComponent("Chatroom", "Object");
-			org.omg.CORBA.Object obj = rootCtx.resolve(name);
-			ChatRoom room = ChatRoomHelper.narrow(obj);
-
-  			Member m = new Member_Tie(new MemberImpl()) ;
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
+			obj = rootCtx.resolve(name);
+			room = ChatRoomHelper.narrow(obj);
+			// Member Object
+			m = new Member_Tie(new MemberImpl()) ;
+			// Reader for user input
+			reader = new BufferedReader(new InputStreamReader(System.in));
+			// Prompt and get user input
 			System.out.println("Please enter your name before entering the chat room:");
-			String CustomerName=reader.readLine();
-
+			CustomerName = reader.readLine();
+			// Register member for chat
 			room.registerCB(m, CustomerName);
-
-			BufferedReader b = new BufferedReader(new InputStreamReader(System.in)) ;
 
 			do {
 				hang(1);
 				System.out.println("Enter Message:") ;
-				msg = b.readLine() ;
+				msg = reader.readLine() ;
+				// Chat (to chat room members)
 				room.chat("Chat", msg, CustomerName) ;
 				if (msg == "exit")
 					System.out.println("msg="+msg) ;
@@ -46,6 +57,9 @@ public class ChatClient {
 		}
     }
 	
+	/** hang
+	* Waits a number of seconds, allowing server responses to be published in correct sequence
+	*/
 	private static void hang(int seconds){
 		try {
 			Thread.sleep(seconds * 1000);

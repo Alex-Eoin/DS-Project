@@ -80,12 +80,13 @@ public class GameBoard {
 		wordMask = new String(current);
 	}
 	
-	/** */
+	/** Compile return string */
 	public String awayLostGame(){
 		result = "GAME OVER! ... " + awayTeam.toString() + " has lost all their lives. Correct answer was " + gameWord;
 		return result;
 	}
 	
+	/** Compile return string */
 	public String homeLostGame(){
 		result = "GAME OVER! ... " + awayTeam.toString() + " has guessed correctly. Correct answer was " + gameWord;
 		return result;

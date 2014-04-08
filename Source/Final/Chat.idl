@@ -9,10 +9,13 @@ module Chat {
     };
     
     interface ChatRoom {
+		// Chat methods
 		oneway void registerCB(in Member m, in string name);
+		oneway void chat(in string type, in string c, in string name) ;
+		
+		// Game related methods
 		string registerGame(in Player p, in string name);
 		oneway void homePlay(in string word);
 		string awayPlay(in string word);
-		oneway void chat(in string type, in string c, in string name) ;
     };
 };
