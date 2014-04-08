@@ -64,6 +64,7 @@ public class GameClient {
 				} while (msg != "exit");		
 			// Player registered is away (second) player
 			} else {
+				msg = "";
 				p.callBack("The game is hangman. As the second player, please guess a letter from the word.");
 				p.callBack("You have 5 lives");
 				p.callBack("Guess a letter contained in the word:");
